@@ -1,0 +1,25 @@
+{
+    "name": "nodebird-front",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nuxt",
+        "lint": "eslint **/*"
+    },
+    "author": "juyoung",
+    "license": "ISC",
+    "dependencies": {
+        "nuxt": "^2.15.8",
+        "vue": "^2.6.14"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^4.2.1",
+        "autoprefixer": "^10.3.7",
+        "eslint": "^8.0.1",
+        "eslint-plugin-vue": "^7.19.1",
+        "postcss": "^8.3.9",
+        "tailwindcss": "^2.2.17"
+    }
+}
