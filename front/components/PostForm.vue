@@ -42,10 +42,11 @@ export default {
                 const result = await this.$store.dispatch("posts/add", {
                     content: this.content,
                     user: {
+                        id: this.user.id,
                         nickname: this.user.nickname,
                     },
-                    comment: [],
-                    image: [],
+                    comments: [],
+                    images: [],
                     id: Date.now(),
                     createdAt: Date.now(),
                 });

@@ -6,10 +6,12 @@
                 NodeBird
             </nuxt-link>
             <div class="flex items-center space-x-8">
-                <div class="">
-                    <i class="fas fa-search cursor-pointer"></i>
-                    <input class="px-3 border-b bg-green-500 outline-none text-white border-white" type="text" />
-                </div>
+                <form @submit.prevent="onSubmitHandler" class="">
+                    <button type="submit">
+                        <i class="fas fa-search cursor-pointer"></i>
+                    </button>
+                    <input v-model="hashtag" required class="px-3 border-b bg-green-500 outline-none text-white border-white" type="text" />
+                </form>
                 <nuxt-link to="/profile" class=" cursor-pointer">
                     프로필
                 </nuxt-link>
@@ -32,8 +34,20 @@ export default {
     components: {
         LoginForm,
     },
+    data() {
+        return {
+            hashtag: "",
+        };
+    },
     computed: {},
-    methods: {},
+    methods: {
+        onSubmitHandler() {
+            this.$router.push({
+                path: `/hashtag/${this.hashtag}`,
+            });
+            this.hashtag = "";
+        },
+    },
 };
 </script>
 

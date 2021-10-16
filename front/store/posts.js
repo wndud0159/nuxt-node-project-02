@@ -1,6 +1,10 @@
 export const state = () => ({
     post: [],
+    hasMorePost: true, // 인피니트스크롤링 기법
 });
+
+const limit = 10;
+const totalPosts = 51;
 
 export const mutations = {
     addPost(state, payload) {
@@ -13,6 +17,23 @@ export const mutations = {
     addComment(state, payload) {
         const index = state.post.findIndex((v) => v.id === payload.postId);
         state.post[index].comment.unshift(payload);
+    },
+    loadPosts(state) {
+        const diff = totalPosts - state.post.length;
+        const fakePosts = Array(diff > limit ? limit : diff)
+            .fill()
+            .map((v) => ({
+                id: Math.random().toString(),
+                user: {
+                    id: 1,
+                    nickname: "주영",
+                },
+                content: `hello infinite scrolling${Math.random()}`,
+                comments: [],
+                images: [],
+            }));
+        state.post = state.post.concat(fakePosts);
+        state.hasMorePost = fakePosts.length === limit;
     },
 };
 
@@ -27,5 +48,10 @@ export const actions = {
     },
     addComment({ commit }, payload) {
         commit("addComment", payload);
+    },
+    loadPosts({ commit, state }, payload) {
+        if (state.hasMorePost) {
+            commit("loadPosts");
+        }
     },
 };

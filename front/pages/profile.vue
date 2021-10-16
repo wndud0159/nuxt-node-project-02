@@ -17,10 +17,12 @@
         <div class="space-y-3 border shadow-md px-3 py-3">
             <div class="text-xl font-semibold">팔로잉</div>
             <Follow :users="followingList" :remove="removeFollowing" />
+            <button @click="loadMoreFollowing" v-if="hasMoreFollowing" class="text-blue-500">더보기</button>
         </div>
         <div class="space-y-3 border shadow-md px-3 py-3">
             <div class="text-xl font-semibold">팔로워</div>
             <Follow :users="followerList" :remove="removeFollower" />
+            <button @click="loadMoreFollower" v-if="hasMoreFollower" class="text-blue-500">더보기</button>
         </div>
     </div>
 </template>
@@ -36,6 +38,10 @@ export default {
             name: "",
         };
     },
+    fetch({ store }) {
+        store.dispatch("users/loadFollowings");
+        store.dispatch("users/loadFollowers");
+    },
     computed: {
         user() {
             return this.$store.state.users.user;
@@ -45,6 +51,12 @@ export default {
         },
         followerList() {
             return this.$store.state.users.followerList;
+        },
+        hasMoreFollowing() {
+            return this.$store.state.users.hasMoreFollowing;
+        },
+        hasMoreFollower() {
+            return this.$store.state.users.hasMoreFollower;
         },
     },
     methods: {
@@ -59,6 +71,12 @@ export default {
         },
         removeFollower(id) {
             this.$store.dispatch("users/removeFollower", { id });
+        },
+        loadMoreFollowing() {
+            this.$store.dispatch("users/loadFollowings");
+        },
+        loadMoreFollower() {
+            this.$store.dispatch("users/loadFollowers");
         },
     },
     middleware: "authenticated",
