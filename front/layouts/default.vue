@@ -18,6 +18,7 @@
                 </nuxt-link>
             </div>
         </div>
+
         <div class="flex md:flex-row flex-col w-full pt-24 px-3">
             <div class="md:w-4/12 w-full mr-5"><LoginForm /></div>
             <div class="md:w-8/12 w-full mt-10 md:mt-0"><nuxt /></div>
@@ -31,6 +32,8 @@ export default {
     components: {
         LoginForm,
     },
+    computed: {},
+    methods: {},
 };
 </script>
 
