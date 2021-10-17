@@ -38,12 +38,8 @@ export default {
         onSubmitHandler() {
             this.$store
                 .dispatch("posts/addComment", {
-                    id: Date.now(),
                     postId: this.postId,
                     comment: this.comment,
-                    user: {
-                        nickname: this.user.nickname,
-                    },
                 })
                 .then(() => {
                     this.isMessage = true;

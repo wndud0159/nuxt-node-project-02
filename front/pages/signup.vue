@@ -60,11 +60,11 @@ export default {
             console.log(this.terms);
         },
         onSubmitHandler() {
-            console.log("체크");
             this.$store
                 .dispatch("users/signUp", {
                     email: this.email,
                     nickname: this.nickname,
+                    password: this.password,
                 })
                 .then(() => {
                     this.$router.replace("/");

@@ -11,5 +11,11 @@ module.exports = {
         ],
         meta: [{ charset: "utf-8" }, { name: "viewport", content: "width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" }],
     },
+    modules: ["@nuxtjs/axios"],
     buildModules: ["@nuxtjs/tailwindcss"],
+    axios: {
+        browserBaseURL: "http://localhost:8080",
+        baseURL: "http://localhost:8080",
+        https: false,
+    },
 };

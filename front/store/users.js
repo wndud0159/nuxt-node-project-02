@@ -1,33 +1,7 @@
 export const state = () => ({
     user: null,
-    followingList: [
-        // {
-        //     id: 1,
-        //     nickname: "주영",
-        // },
-        // {
-        //     id: 2,
-        //     nickname: "주빵",
-        // },
-        // {
-        //     id: 3,
-        //     nickname: "주순",
-        // },
-    ],
-    followerList: [
-        // {
-        //     id: 1,
-        //     nickname: "윤아",
-        // },
-        // {
-        //     id: 2,
-        //     nickname: "길동",
-        // },
-        // {
-        //     id: 3,
-        //     nickname: "홍구",
-        // },
-    ],
+    followingList: [],
+    followerList: [],
     hasMoreFollowing: true,
     hasMoreFollower: true,
 });
@@ -39,6 +13,7 @@ const limit = 3;
 export const mutations = {
     setUser(state, payload) {
         state.user = payload;
+        console.log("user state : ", state.user);
     },
     editNickName(state, payload) {
         state.user.nickname = payload.nickname;
@@ -85,17 +60,68 @@ export const actions = {
     signUp({ commit, state }, payload) {
         // context {commit, state, 등등} 를 구조분해
         // 서버에 회원가입 요청을 보내는 부분
-        commit("setUser", payload);
+        this.$axios
+            .post(
+                "/user",
+                {
+                    email: payload.email,
+                    nickname: payload.nickname,
+                    password: payload.password,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((response) => {
+                console.log("signup success : ", response.data);
+                commit("setUser", response.data);
+            })
+            .catch((error) => {
+                console.error("user create error : ", error);
+            });
     },
-    logIn({ commit }, payload) {
-        commit("setUser", payload);
+    login({ commit }, payload) {
+        console.log("payload check : ", payload);
+        this.$axios
+            .post(
+                "/user/login",
+                {
+                    email: payload.email,
+                    password: payload.password,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((response) => {
+                console.log("login success : ", response.data);
+                commit("setUser", response.data);
+            })
+            .catch((error) => {
+                console.error("user login error : ", error);
+            });
     },
-    logOut({ commit }, payload) {
-        commit("setUser", null);
+    logout({ commit }, payload) {
+        this.$axios
+            .post(
+                "/user/logout",
+                {},
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((response) => {
+                console.log("logout success : ", response);
+                commit("setUser", null);
+            })
+            .catch((error) => {
+                console.error("user logout error : ", error);
+            });
     },
     edit({ commit }, payload) {
         commit("editNickName", payload);
     },
+
     addFollowing({ commit }, payload) {
         commit("addFollowing", payload);
     },
@@ -116,6 +142,16 @@ export const actions = {
     loadFollowers({ commit, state }, payload) {
         if (state.hasMoreFollower) {
             commit("loadFollowers", payload);
+        }
+    },
+    async loadUser({ state, commit }) {
+        try {
+            const res = await this.$axios.get("/user", {
+                withCredentials: true,
+            });
+            commit("setUser", res.data);
+        } catch (err) {
+            console.error(err);
         }
     },
 };

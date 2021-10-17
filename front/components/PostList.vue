@@ -1,8 +1,6 @@
 <template>
     <div class="px-3 py-3 border shadow-md rounded-sm border-gray-200">
-        <nuxt-link :to="`/user/${post.id}`">
-            {{ post.user.nickname }} </nuxt-link
-        ><br />
+        <nuxt-link :to="`/user/${post.id}`"> {{ post.User.nickname }} </nuxt-link><br />
         <nuxt-link :to="`/post/${post.id}`">
             {{ post.content }}
         </nuxt-link>
@@ -57,11 +55,16 @@ export default {
             this.isDropdown = false;
         },
         onToggleCommentHandler() {
+            if (!this.isComment) {
+                this.$store.dispatch("posts/loadComment", {
+                    postId: this.post.id,
+                });
+            }
             this.isComment = !this.isComment;
         },
         onRemovePost() {
             this.$store.dispatch("posts/remove", {
-                id: this.post.id,
+                postId: this.post.id,
             });
         },
         onEditPost() {

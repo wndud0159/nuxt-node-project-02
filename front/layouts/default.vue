@@ -39,6 +39,9 @@ export default {
             hashtag: "",
         };
     },
+    fatch({ store }) {
+        store.dispatch("users/loadUser");
+    },
     computed: {},
     methods: {
         onSubmitHandler() {
