@@ -41,6 +41,7 @@ export const mutations = {
         // state.post = state.post.concat(fakePosts);
         // state.hasMorePost = fakePosts.length === limit;
         state.post = state.post.concat(payload);
+        state.hasMorePost = payload.length == limit;
     },
     concatImagePaths(state, payload) {
         state.imagePaths = state.imagePaths.concat(payload);
@@ -114,9 +115,9 @@ export const actions = {
     },
     async loadPosts({ commit, state }, payload) {
         try {
-            const result = await this.$axios.get(`/posts`);
-            console.log("postlist check", result);
-            commit("loadPosts", result);
+            const result = await this.$axios.get(`/posts?offset=${state.post.length}$limit=10`);
+            console.log("postlist check", result.data);
+            commit("loadPosts", result.data);
         } catch (error) {
             console.error("load posts error : ", error);
         }

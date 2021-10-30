@@ -28,20 +28,23 @@ export default {
         return store.dispatch("posts/loadPosts", { reset: true });
     },
     mounted() {
-        // window.addEventListener("scroll", this.onScroll);
+        window.addEventListener("scroll", this.onScroll);
     },
     beforeDestroy() {
-        // window.addEventListener("scroll", this.onScroll);
+        window.addEventListener("scroll", this.onScroll);
     },
     methods: {
-        // onScroll() {
-        //     if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-        //         console.log("찍어보세용~");
-        //         if (this.hasMorePost) {
-        //             this.$store.dispatch("posts/loadPosts");
-        //         }
-        //     }
-        // },
+        onScroll() {
+            if (
+                window.scrollY + document.documentElement.clientHeight >
+                document.documentElement.scrollHeight - 300
+            ) {
+                console.log("찍어보세용~");
+                if (this.hasMorePost) {
+                    this.$store.dispatch("posts/loadPosts");
+                }
+            }
+        },
     },
 };
 </script>

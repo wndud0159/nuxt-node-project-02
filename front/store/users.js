@@ -151,7 +151,7 @@ export const actions = {
             });
             commit("setUser", res.data);
         } catch (err) {
-            console.error(err);
+            console.error("loaduser error : ", err);
         }
     },
 };

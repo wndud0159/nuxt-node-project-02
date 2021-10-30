@@ -13,8 +13,8 @@ const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const app = express();
 
-// db.sequelize.sync();
-db.sequelize.sync({ force: true }); // 기존 데이터 다 날리고 새로만듬
+db.sequelize.sync();
+// db.sequelize.sync({ force: true }); // 기존 데이터 다 날리고 새로만듬
 passportConfig();
 
 app.use(morgan("dev"));
