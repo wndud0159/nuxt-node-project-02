@@ -1,10 +1,11 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+
 const db = require("../models");
-const { isLoggedIn } = require("./middleware");
 
 const router = express.Router();
+
 const upload = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
@@ -19,13 +20,12 @@ const upload = multer({
     limit: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post("/images", isLoggedIn, upload.array("image"), (req, res) => {
-    // req.files = [{filename : 'ㅇ니ㅏㅓㅎㅇ.png'}, {filename: 'jadslkf.jpeg'}]
+router.post("/images", upload.array("image"), (req, res) => {
     console.log(req.files);
     res.json(req.files.map((v) => v.filename));
 });
 
-router.post("/", isLoggedIn, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
         const hashtags = req.body.content.match(/#[^\s#]+/g);
         const newPost = await db.Post.create({
@@ -79,11 +79,13 @@ router.post("/", isLoggedIn, async (req, res, next) => {
 
 router.delete(`/:id`, async (req, res, next) => {
     try {
-        await db.Post.destroy({
+        const result = await db.Post.destroy({
             where: {
                 id: req.params.id,
             },
         });
+        console.log('post delete result : ', result)
+        res.send('삭제했습니다.')
     } catch (error) {
         console.error(error);
         next(error);
@@ -118,7 +120,7 @@ router.get("/:id/comment", async (req, res, next) => {
     }
 });
 
-router.post("/:id/comment", isLoggedIn, async (req, res, next) => {
+router.post("/:id/comment", async (req, res, next) => {
     try {
         const post = await db.Post.findOne({
             where: {

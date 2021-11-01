@@ -7,3 +7,4 @@ dist-ssr
 .vscode
 .nuxt
 .eslintrc
+dev.js

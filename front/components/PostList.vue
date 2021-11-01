@@ -4,6 +4,7 @@
         <nuxt-link :to="`/post/${post.id}`">
             {{ post.content }}
         </nuxt-link>
+        <PostImages :images="post.Images || []" />
         <div class="flex space-x-10 text-lg text-yellow-400 mt-10">
             <i class="fas fa-retweet"></i>
             <i class="far fa-heart"></i>
@@ -31,9 +32,12 @@
 
 <script>
 import CommentForm from "./CommentForm.vue";
+import PostImages from './PostImages.vue'
+
 export default {
     components: {
         CommentForm,
+        PostImages,
     },
     props: {
         post: {

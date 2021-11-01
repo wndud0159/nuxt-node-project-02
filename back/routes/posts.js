@@ -11,12 +11,14 @@ router.get("/", async (req, res, next) => {
                     model: db.User,
                     attributes: ["id", "nickname"],
                 },
+                {
+                    model: db.Image,
+                },
             ],
             order: [["createdAt", "DESC"]],
             offset: parseInt(req.query.offset, 10) || 0,
             limit: parseInt(req.query.limit, 10) || 10,
         });
-        // console.log("server posts check", posts);
         res.json(posts);
     } catch (error) {
         console.error(error);

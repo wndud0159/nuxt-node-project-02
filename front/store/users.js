@@ -69,12 +69,12 @@ export const actions = {
                     password: payload.password,
                 },
                 {
-                    withCredentials: true,
+                    // withCredentials: true,
                 }
             )
             .then((response) => {
-                console.log("signup success : ", response.data);
-                commit("setUser", response.data);
+                console.log("signup success : ", response);
+                // commit("setUser", response.data);
             })
             .catch((error) => {
                 console.error("user create error : ", error);
@@ -95,7 +95,7 @@ export const actions = {
             )
             .then((response) => {
                 console.log("login success : ", response.data);
-                commit("setUser", response.data);
+                commit("setUser", response.data.user);
             })
             .catch((error) => {
                 console.error("user login error : ", error);
@@ -107,7 +107,7 @@ export const actions = {
                 "/user/logout",
                 {},
                 {
-                    withCredentials: true,
+                    // withCredentials: true,
                 }
             )
             .then((response) => {
@@ -146,10 +146,12 @@ export const actions = {
     },
     async loadUser({ state, commit }) {
         try {
-            const res = await this.$axios.get("/user", {
-                withCredentials: true,
-            });
-            commit("setUser", res.data);
+            const res = await this.$axios.get("/user");
+            if (res.data.error) {
+                console.log('loadUser error : ', res.data.message)
+                return
+            }
+            console.log(res.data)
         } catch (err) {
             console.error("loaduser error : ", err);
         }

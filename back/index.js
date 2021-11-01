@@ -1,21 +1,17 @@
 const express = require("express");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const session = require("express-session");
-const cookie = require("cookie-parser");
 const morgan = require("morgan");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
 
 const db = require("./models");
-const passportConfig = require("./passport");
 const usersRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const app = express();
 
-db.sequelize.sync();
-// db.sequelize.sync({ force: true }); // 기존 데이터 다 날리고 새로만듬
-passportConfig();
+// db.sequelize.sync();
+db.sequelize.sync({ force: true }); // 기존 데이터 다 날리고 새로만듬
 
 app.use(morgan("dev"));
 app.use(
@@ -25,22 +21,10 @@ app.use(
     })
 );
 app.use("/", express.static("uploads"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookie("cookiesecret"));
-app.use(
-    session({
-        resave: false,
-        saveUninitialized: false,
-        secret: "cookiecsecret",
-        cookie: {
-            httpOnly: true,
-            secure: false,
-        },
-    })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(express.json());
+app.use(cookieParser())
+
 
 app.get("/", (req, res) => {
     res.status(200).send("안녕 주영");

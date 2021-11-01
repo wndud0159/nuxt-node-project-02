@@ -62,7 +62,7 @@ export const actions = {
                     image: state.imagePaths,
                 },
                 {
-                    withCredentials: true,
+                    // withCredentials: true,
                 }
             )
             .then((response) => {
@@ -75,13 +75,15 @@ export const actions = {
     },
     remove({ commit }, payload) {
         this.$axios
-            .delete(`/post/${payload.postId}`, {
-                withCredentials: true,
-            })
+            .delete(`/post/${payload.postId}`,
+                {
+                // withCredentials: true,
+                }
+            )
             .then((response) => {
-                commit("removePost", response.data);
+                commit("removePost", payload);
             })
-            .error((error) => {
+            .catch((error) => {
                 console.error("post remove error : ", error);
             });
     },
@@ -93,7 +95,7 @@ export const actions = {
                     content: payload.content,
                 },
                 {
-                    withCredentials: true,
+                    // withCredentials: true,
                 }
             )
             .then((response) => {
@@ -126,7 +128,7 @@ export const actions = {
     uploadImages({ commit }, payload) {
         this.$axios
             .post("/post/images", payload, {
-                withCredentials: true,
+                // withCredentials: true,
             })
             .then((response) => {
                 console.log("image upload success!", response.data);
