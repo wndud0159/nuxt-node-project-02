@@ -116,7 +116,7 @@ export const actions = {
     async loadPosts({ commit, state }, payload) {
         try {
             const result = await this.$axios.get(`/posts?offset=${state.post.length}$limit=10`);
-            console.log("postlist check", result.data);
+            // console.log("postlist check", result.data);
             commit("loadPosts", result.data);
         } catch (error) {
             console.error("load posts error : ", error);
