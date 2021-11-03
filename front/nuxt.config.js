@@ -38,8 +38,8 @@ module.exports = {
         },
     },
     axios: {
-        browserBaseURL: 'http://localhost:8080',
-        baseURL: 'http://localhost:8080',
+        browserBaseURL: process.env.NODE_ENV === 'production' ? 'api.wndud0159.shop' : 'http://localhost:8080',
+        baseURL: process.env.NODE_ENV === 'production' ? 'api.wndud0159.shop' : 'http://localhost:8080',
         https: false,
         credentials: true,
         init(axios) {

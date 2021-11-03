@@ -26,7 +26,7 @@ if (prod) {
     app.use(hpp());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: 'http://domain',
+        origin: 'http://wndud0159.shop',
         credentials: true,
     }));
 } else {
