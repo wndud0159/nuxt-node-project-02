@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const multerS3 = require('multer-s3');
 const path = require("path");
 
 const {auth} = require('../middleware/auth')
@@ -7,7 +8,26 @@ const db = require("../models");
 
 const router = express.Router();
 
-const upload = multer({
+// AWS.config.update({
+//     region: 'ap-northeast-2',
+//     accessKeyId: process.env.S3_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+// });
+
+// const uploadS3 = multer({
+//     storage: multerS3({
+//         s3: new AWS.S3(),
+//         bucket: 'vue-nodebird',
+//         key(req, file, cb) {
+//         cb(null, `original/${Date.now()}${path.basename(file.originalname)}`)
+//         },
+//     }),
+//     limit: { fileSize: 20 * 1024 * 1024 },
+// });
+
+
+
+const uploadLocal = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
             done(null, "uploads");
@@ -20,6 +40,10 @@ const upload = multer({
     }),
     limit: { fileSize: 20 * 1024 * 1024 },
 });
+
+const upload = process.env.NODE_ENV === 'production' ? uploadS3 : uploadLocal
+
+
 
 router.post("/images", upload.array("image"), (req, res) => {
     console.log(req.files);
@@ -80,6 +104,37 @@ router.post("/", auth, async (req, res, next) => {
     } catch (error) {
         console.error(error);
         next(error);
+    }
+});
+
+router.get('/:id', async (req, res, next) => {
+    try {
+        const post = await db.Post.findOne({
+        where: { id: req.params.id },
+        include: [{
+            model: db.User,
+            attributes: ['id', 'nickname'],
+        }, {
+            model: db.Image,
+        }, {
+            model: db.User,
+            as: 'Likers',
+            attributes: ['id'],
+        }, {
+            model: db.Post,
+            as: 'Retweet',
+            include: [{
+            model: db.User,
+            attributes: ['id', 'nickname'],
+            }, {
+            model: db.Image,
+            }],
+        }],
+        });
+        res.json(post);
+    } catch (err) {
+        console.error(err);
+        next(err);
     }
 });
 

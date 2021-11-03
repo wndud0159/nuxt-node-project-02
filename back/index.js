@@ -2,8 +2,11 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const hpp = require('hpp');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
 
-
+const prod = process.env.NODE_ENV === 'production';
 const db = require("./models");
 const hashtagRouter = require("./routes/hashtag");
 const usersRouter = require("./routes/user");
@@ -11,17 +14,28 @@ const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const app = express();
 
+
+dotenv.config();
 db.sequelize.sync();
 // db.sequelize.sync({ force: true }); // 기존 데이터 다 날리고 새로만듬
 
-app.use(morgan("dev"));
-app.use(
-    cors({
-        origin: "http://localhost:3000",
+if (prod) {
+    app.use(helmet());
+    app.use(hpp());
+    app.use(morgan('combined'));
+    app.use(cors({
+        origin: 'http://domain',
         credentials: true,
-    })
-);
-app.use("/", express.static("uploads"));
+    }));
+} else {
+    app.use(morgan('dev'));
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+    }));
+    app.use("/", express.static("uploads"));
+}
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser())

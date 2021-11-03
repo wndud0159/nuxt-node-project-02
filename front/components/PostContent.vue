@@ -16,6 +16,7 @@
                         {{item}}
                     </nuxt-link>
                 </div>
+                <div class="mt-3 -mb-3">{{$moment(post.createdAt).fromNow()}}</div>
             </div>
         </div>
         <PostImages class="mb-3" :images="post.Images || []" />

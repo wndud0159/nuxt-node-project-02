@@ -1,21 +1,25 @@
-{
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+module.exports = {
     "development": {
         "username": "jyp",
-        "password": "1234",
+        "password": process.env.DB_PASSWORD_LOCAL,
         "database": "jypdb",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "test": {
         "username": "root",
-        "password": null,
+        "password": process.env.DB_PASSWORD_LOCAL,
         "database": "database_test",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "production": {
         "username": "root",
-        "password": null,
+        "password": process.env.DB_PASSWORD_REMOTE,
         "database": "database_production",
         "host": "127.0.0.1",
         "dialect": "mysql"

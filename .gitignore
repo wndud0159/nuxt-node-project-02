@@ -6,5 +6,4 @@ dist-ssr
 .env
 .vscode
 .nuxt
-.eslintrc
-dev.js
+FirstApp.pem

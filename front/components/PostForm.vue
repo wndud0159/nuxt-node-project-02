@@ -9,7 +9,7 @@
                     <button type="button" @click="onClickImageUpload" class="bg-gray-200 py-2 px-3 rounded-md">이미지 업로드</button>
                     <div v-if="imagePaths">
                         <div v-for="item in imagePaths" :key="item" class="">
-                            <img :src="`http://localhost:8080/${item}`" :alt="`${item}`" class="w-40" />
+                            <img :src="`${$axios.defaults.baseURL}/${item}`" :alt="`${item}`" class="w-40" />
                             <div @click="onRemoveImage(item)">제거</div>
                         </div>
                     </div>
