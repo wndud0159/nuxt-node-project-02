@@ -37,22 +37,16 @@ module.exports = {
             console.log('webpack', config, isServer, isClient);
         },
     },
+    auth: {
+        plugins: ['@plugins/axios.js'], // This ensures that we can set cookies from API
+    },
     axios: {
         baseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
         https: false,
-        credentials: true,
-        init(axios) {
-        axios.defaults.withCredentials = true
-        }
     },
     publicRuntimeConfig: {
         axios: {
             browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
-            https: false,
-            credentials: true,
-            init(axios) {
-                axios.defaults.withCredentials = true
-            }
         }
     },
     server: {
