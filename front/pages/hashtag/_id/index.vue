@@ -11,18 +11,15 @@ export default {
         PostList,
     },
     computed: {
-        user() {
-            return this.$store.state.users.user;
-        },
         post() {
             return this.$store.state.posts.post;
         },
-        hasMorePost() {
-            return this.$store.state.posts.hasMorePost;
-        },
     },
-    fetch({ store }) {
-        store.dispatch("posts/loadPosts");
+    fetch({ store, params }) {
+        return store.dispatch('posts/loadHashtagPosts', {
+            hashtag: encodeURIComponent(params.id),
+            reset: true,
+        });
     },
     mounted() {
         window.addEventListener("scroll", this.onScroll);

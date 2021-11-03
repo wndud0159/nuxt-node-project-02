@@ -27,6 +27,9 @@ export default {
     fetch({ store }) {
         return store.dispatch("posts/loadPosts", { reset: true });
     },
+    asyncData() {
+        // 컴포넌트의 데이터를 비동기 채워넣어야 할 경우
+    },
     mounted() {
         window.addEventListener("scroll", this.onScroll);
     },

@@ -18,6 +18,10 @@
             <div>{{ user.nickname }}님</div>
             <div>로그인 되었습니다.</div>
             <button @click="onLogOut" class="bg-gray-200 px-5 py-2 rounded-md">로그아웃</button>
+            <div>
+                <div>{{user.Followings.length}} 팔로잉</div>
+                <div>{{user.Followers.length}} 팔로워</div>
+            </div>
         </div>
     </div>
 </template>

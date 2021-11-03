@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true
             },
             tokenExp: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.DATE,
                 allowNull: true
             }
         },
@@ -31,9 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (db) => {
         db.User.hasMany(db.Post);
         db.User.hasMany(db.Comment);
+        db.User.belongsToMany(db.Post, { through: 'Like', ad: 'Liked'})
         db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followers', foreignKey: 'followingId' });
         db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followings', foreignKey: 'followerId' });
-        db.User.belongsToMany(db.Post, { through: 'Like', ad: 'Liked'})
     };
     return User;
 };

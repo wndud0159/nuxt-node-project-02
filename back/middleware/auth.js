@@ -18,6 +18,23 @@ const auth = (req, res, next) => {
             where: {
                 id: decoded,
             },
+            attributes: ['id', 'nickname'],
+            include: [
+                {
+                    model: db.Post,
+                    attributes: ['id']
+                },
+                {
+                    model: db.User,
+                    as: 'Followings',
+                    attributes: ['id']
+                },
+                {
+                    model: db.User,
+                    as: 'Followers',
+                    attributes: ['id']
+                }
+            ]
         });
         // 3. 유저가 없으면 인증 no
         if (!user) {
@@ -26,7 +43,6 @@ const auth = (req, res, next) => {
                 message: '토큰을 가진 유저가 존재하지 않습니다.'
             })
         }
-        req.token = user.token;
         req.user = user
         // 4. 유저가 있으면 인증 ok
         next()

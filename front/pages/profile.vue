@@ -1,7 +1,7 @@
 <template>
     <div v-if="user" class="space-y-3">
         <div class=" border shadow-md px-3 py-3">
-            <form action="" class=" space-y-3">
+            <div action="" class=" space-y-3">
                 <div class="text-xl font-semibold">내 프로필</div>
                 <form action="" @submit.prevent="onEditNickName">
                     <div>
@@ -12,7 +12,7 @@
                         <button type="submit" class="bg-blue-500 px-5 py-2 rounded-md">수정</button>
                     </div>
                 </form>
-            </form>
+            </div>
         </div>
         <div class="space-y-3 border shadow-md px-3 py-3">
             <div class="text-xl font-semibold">팔로잉</div>
@@ -39,8 +39,10 @@ export default {
         };
     },
     fetch({ store }) {
-        store.dispatch("users/loadFollowings");
-        store.dispatch("users/loadFollowers");
+        return Promise.all([
+            store.dispatch('users/loadFollowings', { offset: 0 }),
+            store.dispatch('users/loadFollowers', { offset: 0 }),
+        ]);
     },
     computed: {
         user() {
@@ -61,16 +63,16 @@ export default {
     },
     methods: {
         onEditNickName() {
-            this.$store.dispatch("users/edit", {
+            this.$store.dispatch("users/changeNickname", {
                 nickname: this.name,
             });
             this.name = "";
         },
-        removeFollowing(id) {
-            this.$store.dispatch("users/removeFollowing", { id });
+        removeFollowing(userId) {
+            this.$store.dispatch("users/unfollow", { userId });
         },
-        removeFollower(id) {
-            this.$store.dispatch("users/removeFollower", { id });
+        removeFollower(userId) {
+            this.$store.dispatch("users/removeFollower", { userId });
         },
         loadMoreFollowing() {
             this.$store.dispatch("users/loadFollowings");

@@ -17,5 +17,9 @@ module.exports = {
         browserBaseURL: "http://localhost:8080",
         baseURL: "http://localhost:8080",
         https: false,
+        credentials: true,
+        init(axios) {
+        axios.defaults.withCredentials = true
+        }
     },
 };
