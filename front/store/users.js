@@ -132,7 +132,7 @@ export const actions = {
                     password: payload.password,
                 },
                 {
-                    // withCredentials: true,
+                    withCredentials: true,
                 }
             )
             .then((response) => {
@@ -149,7 +149,9 @@ export const actions = {
     logout({ commit }, payload) {
         this.$axios
             .post(
-                "/user/logout",{})
+                "/user/logout",{}, {
+                    withCredentials: true,
+                })
             .then((response) => {
                 console.log("logout success : ", response);
                 commit("setUser", response.data.user);
@@ -186,7 +188,9 @@ export const actions = {
     // },
     async loadUser({ state, commit }) {
         try {
-            const res = await this.$axios.get("/user");
+            const res = await this.$axios.get("/user",{
+                withCredentials: true,
+            });
             if (res.data.error) {
                 console.log('loadUser error : ', res.data.message)
                 return
@@ -207,7 +211,7 @@ export const actions = {
     },
     changeNickname({ commit }, payload) {
         this.$axios.patch(`/user/nickname`, { nickname: payload.nickname }, {
-            // withCredentials: true,
+            withCredentials: true,
         })
             .then(() => {
                 commit('changeNickname', payload);
