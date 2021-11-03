@@ -47,7 +47,7 @@ module.exports = {
         }
     },
     server: {
-        port: process.env.PORT || 3000,
+        port: process.env.NODE_ENV === 'production' ? preocess.env.PORT : 3000,
     },
 
 };

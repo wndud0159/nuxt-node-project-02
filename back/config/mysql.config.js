@@ -13,14 +13,14 @@ module.exports = {
     "test": {
         "username": "root",
         "password": process.env.DB_PASSWORD_LOCAL,
-        "database": "database_test",
+        "database": "jypdb",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "production": {
         "username": "root",
         "password": process.env.DB_PASSWORD_REMOTE,
-        "database": "database_production",
+        "database": "jypdb",
         "host": "127.0.0.1",
         "dialect": "mysql"
     }

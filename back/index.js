@@ -14,6 +14,8 @@ const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const app = express();
 
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 8080
+
 
 dotenv.config();
 db.sequelize.sync();
@@ -50,6 +52,6 @@ app.use("/user", usersRouter);
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 
-app.listen(8080, () => {
-    console.log(`백엔드 서버 ${8080}번 포트에서 실행 중`);
+app.listen(PORT, () => {
+    console.log(`백엔드 서버 ${PORT}번 포트에서 실행 중`);
 });

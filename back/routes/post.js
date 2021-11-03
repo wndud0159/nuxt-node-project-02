@@ -41,7 +41,7 @@ const uploadLocal = multer({
     limit: { fileSize: 20 * 1024 * 1024 },
 });
 
-const upload = process.env.NODE_ENV === 'production' ? uploadS3 : uploadLocal
+const upload = uploadLocal
 
 
 
