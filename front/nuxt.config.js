@@ -38,12 +38,16 @@ module.exports = {
         },
     },
     axios: {
-        browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
         baseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
         https: false,
         credentials: true,
         init(axios) {
         axios.defaults.withCredentials = true
+        }
+    },
+    publicRuntimeConfig: {
+        axios: {
+            browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
         }
     },
     server: {
