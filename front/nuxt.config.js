@@ -48,6 +48,8 @@ module.exports = {
     },
     server: {
         port: process.env.NODE_ENV === 'production' ? process.env.PORT : 3000,
+        host: '0.0.0.0', // default: localhost,
+        timing: false
     },
 
 };
