@@ -37,24 +37,23 @@ module.exports = {
             console.log('webpack', config, isServer, isClient);
         },
     },
-    axios: {
-        baseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
-        https: false,
-    },
+    // axios: {
+    //     baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000',
+    //     https: false,
+    // },
     publicRuntimeConfig: {
         axios: {
-            browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
+            browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080', //csr
         }
     },
     privateRuntimeConfig: {
         axios: {
-            baseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080',
+            baseURL: process.env.NODE_ENV === 'production' ? 'http://api.wndud0159.shop' : 'http://localhost:8080', // ssr
         }
     },
     server: {
         port: process.env.NODE_ENV === 'production' ? process.env.PORT : 3000,
         host: '0.0.0.0', // default: localhost,
-        timing: false
     },
 
 };

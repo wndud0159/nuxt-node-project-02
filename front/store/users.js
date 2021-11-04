@@ -190,7 +190,7 @@ export const actions = {
         try {
             const res = await this.$axios.get("/user",{
                 withCredentials: true,
-            });
+            },);
             if (res.data.error) {
                 console.log('loadUser error : ', res.data.message)
                 return
