@@ -106,13 +106,13 @@ router.post("/login", async (req, res, next) => {
             })
 
 
-            // return res.cookie("x_auth", token, {
-            //     // httpOnly: true,
-            //     secure: false,
-            //     expires: expiryDate
-            // })
-            return res.status(200)
-            .json({error: false, user: fullUser, token: token})
+            return res.cookie("x_auth", token, {
+                httpOnly: true,
+                secure: true,
+                expires: expiryDate
+            })
+            // return res.status(200)
+            // .json({error: false, user: fullUser, token: token})
         })
         
     } else {
@@ -124,16 +124,16 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/logout", auth, (req, res) => {
-    // res.clearCookie('x_auth').json({
-    //     error: false,
-    //     user: null,
-    //     message: '로그아웃 성공'
-    // })
-    res.json({
+    res.clearCookie('x_auth').json({
         error: false,
         user: null,
         message: '로그아웃 성공'
     })
+    // res.json({
+    //     error: false,
+    //     user: null,
+    //     message: '로그아웃 성공'
+    // })
 });
 
 router.post('/:id/follow', auth, async (req, res, next) => {

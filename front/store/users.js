@@ -141,13 +141,13 @@ export const actions = {
                     console.log(response.data.message)
                     return
                 }
-                function setCookie(name, value, exp) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + exp*24*60*60*1000);
-                    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-                }
-                setCookie('x_auth', response.data.token, 1)
-                console.log('token : ', response.data.token)
+                // function setCookie(name, value, exp) {
+                //     var date = new Date();
+                //     date.setTime(date.getTime() + exp*24*60*60*1000);
+                //     document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+                // }
+                // setCookie('x_auth', response.data.token, 1)
+                // console.log('token : ', response.data.token)
                 commit("setUser", response.data.user);
             })
             .catch((error) => {
@@ -162,10 +162,10 @@ export const actions = {
                 })
             .then((response) => {
                 console.log("logout success : ", response);
-                function deleteCookie(name) {
-                    document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-                }
-                deleteCookie('x_auth')
+                // function deleteCookie(name) {
+                //     document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+                // }
+                // deleteCookie('x_auth')
                 commit("setUser", response.data.user);
             })
             .catch((error) => {
