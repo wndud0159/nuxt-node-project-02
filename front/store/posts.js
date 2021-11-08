@@ -82,6 +82,9 @@ export const actions = {
                 {
                     content: payload.content,
                     image: state.imagePaths,
+                },
+                {
+                    withCredentials: true,
                 }
             )
             .then((response) => {
@@ -94,7 +97,9 @@ export const actions = {
     },
     remove({ commit }, payload) {
         this.$axios
-            .delete(`/post/${payload.postId}`)
+            .delete(`/post/${payload.postId}`, {
+                withCredentials: true,
+            })
             .then((response) => {
                 commit("removePost", payload);
             })
@@ -109,6 +114,9 @@ export const actions = {
                 {
                     content: payload.content,
                 },
+                {
+                    withCredentials: true,
+                }
             )
             .then((response) => {
                 console.log('response data', response.data)
@@ -120,7 +128,9 @@ export const actions = {
     },
     loadComment({ commit }, payload) {
         this.$axios
-            .get(`/post/${payload.postId}/comments`)
+            .get(`/post/${payload.postId}/comments`, {
+                withCredentials: true,
+            })
             .then((response) => {
                 commit("loadComments", {
                     postId: payload.postId,
@@ -133,7 +143,9 @@ export const actions = {
     },
     async loadPost({ commit, state }, payload) {
         try {
-            const res = await this.$axios.get(`/post/${payload}`);
+            const res = await this.$axios.get(`/post/${payload}`, {
+                withCredentials: true,
+            });
             commit('loadPost', res.data);
         } catch (err) {
             console.error(err);
@@ -143,7 +155,9 @@ export const actions = {
         console.log('loadPosts')
         try {
             if (payload && payload.reset) {
-                const res = await this.$axios.get(`/posts?limit=10`);
+                const res = await this.$axios.get(`/posts?limit=10`, {
+                    withCredentials: true,
+                });
                 commit('loadPosts', {
                     data: res.data,
                     reset: true,
@@ -152,7 +166,9 @@ export const actions = {
             }
             if (state.hasMorePost) {
                 const lastPost = state.post[state.post.length - 1];
-                const res = await this.$axios.get(`/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+                const res = await this.$axios.get(`/posts?lastId=${lastPost && lastPost.id}&limit=10`, {
+                    withCredentials: true,
+                });
                 console.log(res)
                 commit('loadPosts', {
                     data: res.data,
@@ -166,7 +182,9 @@ export const actions = {
     loadUserPosts: throttle(async function ({ commit, state }, payload) {
         try {
             if (payload && payload.reset) {
-            const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`);
+                const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`, {
+                    withCredentials: true,
+            });
             commit('loadPosts', {
                 data: res.data,
                 reset: true,
@@ -175,7 +193,9 @@ export const actions = {
             }
             if (state.hasMorePost) {
             const lastPost = state.post[state.post.length - 1];
-            const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+                const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}&limit=10`, {
+                    withCredentials: true,
+            });
             commit('loadPosts', {
                 data: res.data,
             });
@@ -189,7 +209,9 @@ export const actions = {
         console.log('loadHashtagPosts')
         try {
             if (payload && payload.reset) {
-            const res = await this.$axios.get(`/hashtag/${payload.hashtag}?limit=10`);
+                const res = await this.$axios.get(`/hashtag/${payload.hashtag}?limit=10`, {
+                    withCredentials: true,
+            });
             commit('loadPosts', {
                 data: res.data,
                 reset: true,
@@ -198,7 +220,9 @@ export const actions = {
             }
             if (state.hasMorePost) {
             const lastPost = state.post[state.post.length - 1];
-            const res = await this.$axios.get(`/hashtag/${payload.hashtag}?lastId=${lastPost && lastPost.id}&limit=10`);
+                const res = await this.$axios.get(`/hashtag/${payload.hashtag}?lastId=${lastPost && lastPost.id}&limit=10`, {
+                    withCredentials: true,
+            });
             commit('loadPosts', {
                 data: res.data,
             });
@@ -210,7 +234,9 @@ export const actions = {
     }, 2000),
     uploadImages({ commit }, payload) {
         this.$axios
-            .post("/post/images", payload, {})
+            .post("/post/images", payload, {
+                withCredentials: true,
+            })
             .then((response) => {
                 console.log("image upload success!", response.data);
                 commit("concatImagePaths", response.data);
@@ -220,7 +246,9 @@ export const actions = {
             });
     },
     retweet({commit}, payload) {
-        this.$axios.post(`/post/${payload.postId}/retweet`, {})
+        this.$axios.post(`/post/${payload.postId}/retweet`, {
+            withCredentials: true,
+        })
             .then((response) => {
                 if (response.data.error) {
                     console.log(response.data.message)
@@ -232,7 +260,9 @@ export const actions = {
             })
     },
     likePost({commit}, payload) {
-        this.$axios.post(`/post/${payload.postId}/like`, {})
+        this.$axios.post(`/post/${payload.postId}/like`, {
+            withCredentials: true,
+        })
             .then((response) => {
                 commit('likePost', {
                     userId: response.data.userId,
@@ -243,7 +273,9 @@ export const actions = {
             })
     },
     unlikePost({commit}, payload) {
-        this.$axios.delete(`/post/${payload.postId}/like`, {})
+        this.$axios.delete(`/post/${payload.postId}/like`, {
+            withCredentials: true,
+        })
             .then((response) => {
                 commit('unlikePost', {
                     userId: response.data.userId, 

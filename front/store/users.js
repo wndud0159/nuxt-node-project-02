@@ -1,3 +1,4 @@
+
 export const state = () => ({
     user: null,
     followingList: [],
@@ -203,6 +204,7 @@ export const actions = {
     async loadOther({ commit }, payload) {
         try {
             const res = await this.$axios.get(`/user/${payload.userId}`, {
+                withCredentials: true,
             });
             commit('setOther', res.data);
         } catch (err) {
@@ -235,7 +237,7 @@ export const actions = {
         offset = 0;
         }
         return this.$axios.get(`/user/${state.user.id}/followers?limit=3&offset=${offset}`, {
-        // withCredentials: true,
+        withCredentials: true,
         })
         .then((res) => {
             commit('loadFollowers', {
@@ -256,7 +258,7 @@ export const actions = {
         offset = 0;
         }
         return this.$axios.get(`/user/${state.user.id}/followings?limit=3&offset=${offset}`, {
-        // withCredentials: true,
+        withCredentials: true,
         })
         .then((res) => {
             commit('loadFollowings', {
@@ -270,7 +272,7 @@ export const actions = {
     },
     follow({ commit }, payload) {
         this.$axios.post(`/user/${payload.userId}/follow`, {}, {
-        // withCredentials: true,
+        withCredentials: true,
         })
             .then((res) => {
                 console.log('test')
@@ -284,7 +286,7 @@ export const actions = {
     },
     unfollow({ commit }, payload) {
         return this.$axios.delete(`/user/${payload.userId}/follow`,  {
-        // withCredentials: true,
+        withCredentials: true,
         })
         .then((res) => { 
             commit('removeFollowing', {
@@ -297,7 +299,7 @@ export const actions = {
     },
     removeFollower({ commit }, payload) {
         return this.$axios.delete(`/user/${payload.userId}/follower`, {
-        // withCredentials: true,
+        withCredentials: true,
         })
         .then((res) => {
             commit('removeFollower', {

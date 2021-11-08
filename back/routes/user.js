@@ -107,8 +107,7 @@ router.post("/login", async (req, res, next) => {
 
 
             return res.cookie("x_auth", token, {
-                sameSite:'none',
-                httpOnly: true,
+                // httpOnly: true,
                 secure: false,
                 expires: expiryDate
             })
