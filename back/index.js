@@ -44,7 +44,7 @@ app.use(cookieParser())
 
 
 app.get("/", (req, res) => {
-    res.status(200).send("안녕 주영");
+    res.status(200).send("노드버드 테스트 입니다");
 });
 
 app.use("/hashtag", hashtagRouter);
