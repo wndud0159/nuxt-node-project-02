@@ -106,13 +106,13 @@ router.post("/login", async (req, res, next) => {
             })
 
 
-            return res.cookie("x_auth", token, {
-                // httpOnly: true,
-                secure: false,
-                expires: expiryDate
-            })
-            .status(200)
-            .json({error: false, user: fullUser})
+            // return res.cookie("x_auth", token, {
+            //     // httpOnly: true,
+            //     secure: false,
+            //     expires: expiryDate
+            // })
+            return res.status(200)
+            .json({error: false, user: fullUser, token: token})
         })
         
     } else {

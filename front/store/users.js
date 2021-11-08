@@ -141,6 +141,13 @@ export const actions = {
                     console.log(response.data.message)
                     return
                 }
+                function setCookie(name, value, exp) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + exp*24*60*60*1000);
+                    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+                }
+                setCookie('x_auth', response.data.token, 1)
+                console.log('token : ', response.data.token)
                 commit("setUser", response.data.user);
             })
             .catch((error) => {
