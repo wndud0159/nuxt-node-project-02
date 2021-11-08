@@ -42,13 +42,13 @@ module.exports = {
     },
     publicRuntimeConfig: {
         axios: {
-            browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api/wndud0159/shop' : 'http://localhost:8080' //csr
+            browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api/wndud0159.shop' : 'http://localhost:8080' //csr
         }
     },
 
     privateRuntimeConfig: {
         axios: {
-            baseURL: process.env.NODE_ENV === 'production' ? 'http://api/wndud0159/shop' : 'http://localhost:8080' //ssr 
+            baseURL: process.env.NODE_ENV === 'production' ? 'http://api/wndud0159.shop' : 'http://localhost:8080' //ssr 
         }
     },
     
