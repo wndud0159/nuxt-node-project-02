@@ -162,6 +162,10 @@ export const actions = {
                 })
             .then((response) => {
                 console.log("logout success : ", response);
+                function deleteCookie(name) {
+                    document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+                }
+                deleteCookie('x_auth')
                 commit("setUser", response.data.user);
             })
             .catch((error) => {

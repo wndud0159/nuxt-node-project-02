@@ -123,8 +123,13 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-router.post("/logout", (req, res) => {
-    res.clearCookie('x_auth').json({
+router.post("/logout", auth, (req, res) => {
+    // res.clearCookie('x_auth').json({
+    //     error: false,
+    //     user: null,
+    //     message: '로그아웃 성공'
+    // })
+    res.json({
         error: false,
         user: null,
         message: '로그아웃 성공'
