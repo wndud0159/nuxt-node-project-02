@@ -44,7 +44,6 @@ const auth = (req, res, next) => {
             })
         }
         req.user = user
-        req.x_auth = token
         // 4. 유저가 있으면 인증 ok
         next()
     })

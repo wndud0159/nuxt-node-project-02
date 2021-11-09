@@ -38,9 +38,9 @@ if (prod) {
     app.use("/", express.static("uploads"));
 }
 
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser())
 
 
 app.get("/", (req, res) => {

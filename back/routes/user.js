@@ -63,6 +63,8 @@ router.post("/login", async (req, res, next) => {
         },
     });
 
+    console.log('user check : ', user)
+
     if (user) {
         // 비번이 맞는지 체크
         bcrypt.compare(req.body.password, user.password, async function (err, isMatch) {
@@ -79,7 +81,9 @@ router.post("/login", async (req, res, next) => {
             var token = jwt.sign(user.id, 'secretToken')
             var expiryDate = new Date( Date.now() + 60 * 60 * 1000 * 24 * 7); // 24 hour 7일
             console.log('token check : ', token)
-            await db.User.update({ token: token, tokenExp: expiryDate }, { where: { id: user.id } })
+            const updateResult = await db.User.update({ token: token, tokenExp: expiryDate }, { where: { id: user.id } })
+
+            console.log('update check : ', updateResult);
 
             const fullUser = await db.User.findOne({
                 where: {
@@ -105,12 +109,13 @@ router.post("/login", async (req, res, next) => {
                 ]
             })
 
-
-            return res.cookie("x_auth", token, {
+            res.cookie("x_auth", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production' ? true : false,
                 expires: expiryDate
             })
-            // return res.status(200)
-            // .json({error: false, user: fullUser, token: token})
+            return res.status(200)
+            .json({error: false, user: fullUser, token: token})
         })
         
     } else {
